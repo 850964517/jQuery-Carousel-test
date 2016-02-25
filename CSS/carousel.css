@@ -1,0 +1,48 @@
+/* 
+* @Author: Anle
+* @Date:   2016-02-24 11:50:10
+* @Last Modified by:   Anle
+* @Last Modified time: 2016-02-24 16:37:00
+*/
+.poster_main{
+	position: relative;
+	width: 800px;
+	height: 270px;
+}
+/*图片展示的主体区域*/
+.poster_main .poster_list{
+	width: 100%;
+	height: 100%;
+
+}
+/*上下切换按钮*/
+.poster_main .poster_btn{
+    width: 100px;
+    height: 270px;/*为了点击上下区域都有效果*/
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+}
+.poster_main .poster_prev_btn{
+	left: 0;
+}
+.poster_main .posoter_next_btn{
+	right: 0;
+}
+/*图片显示的主体区域*/
+.poster_main .poster_list .poster_list_item{
+    position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.poster_list_item img{
+	display:block;
+}
+.poster_prev_btn{
+	background:url("../image/btn_l.png") no-repeat center center;
+}
+.posoter_next_btn{
+	background:url("../image/btn_r.png") no-repeat center center;
+}
