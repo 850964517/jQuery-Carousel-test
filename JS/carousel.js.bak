@@ -11,26 +11,73 @@
 ;(function($){
 	//定义一个Carousel的方法
    var  Carousel=function(poster){
-       //获取配置参数
-       //var set=poster.attr("data-setting");//获取属性节点的配置参数
+	   //保存单个节点对象
+	   this.poster=poster;
+	   //设置图片旋转区域的ul的大小
+	   this.posterItemMain=poster.find("ul.poster_list");
+	   //保存上下切换按钮
+	   this.nextBtn=poster.find("div.posoter_next_btn");
+	   this.prevBtn=poster.find("div.poster_prev_btn");
+	   //保存幻灯片第一帧
+	   this.posterFirseItem=this.posterItemMain.find("li.poster_list_item:eq(0)")
+       
        
 	   //设置默认参数
 	   this.setting={
-	     "width":1000,
-         "height":270,
-         "posterWidth":640,
-         "posterHeight":270,
+	     "width":1000,//幻灯片的宽度
+         "height":270,//幻灯片的高度
+         "posterWidth":640,//幻灯片第一帧的宽度
+         "posterHeight":270,//幻灯片第一帧的高度
          "scale":0.9,
          "speed":500,
          "verticalAlign":"middle"
 	   }
-	   //使用jquery.extend方法去扩展对象
-	   $.extend(this.setting,{width:900});
-	   console.log(this.setting);//width:900 配置参数如果默认有相同的属性,那么会覆盖掉默认配置参数
+	   //使用jquery.extend方法去扩展对象(扩展默认参数),扩展的属性对象有的话就扩展,没有的话就添加
+	   $.extend(this.setting,this.getSetting());
+	   //console.log($.extend(this.setting,this.getSetting()));//width:900 配置参数如果默认有相同的属性,那么会覆盖掉默认配置参数
+       //console.log(this.setting.width);  
+
+	   //设置默认参数
+	   this.setStingValue();
    };
    //将公共方法添加到Carousel.prototype上面
    Carousel.prototype={
-	   // 用来获取默认配置参数
+	   //设置配置参数数字去控制基本的高度宽度
+	   setStingValue:function(){
+	      this.poster.css({
+		     width:this.setting.width,//因为通过$.extend扩展对象将人工设置参数和默认配置参数合并到一起了,这样就改变了this.setting对象的值
+			 height:this.setting.height
+		  });
+		//设置图片轮播区域的大小
+		this.posterItemMain.css({
+		    width:this.setting.width,
+			height:this.setting.height
+		});
+		//计算上下按钮的宽度值(上下按钮的位置值等于旋转区域的宽度-第一帧图片的宽度)
+		var w=(this.setting.width-this.setting.posterWidth)/2;
+		this.prevBtn.css({
+			  width:w,
+			  height:this.setting.height
+			});
+		this.nextBtn.css({
+			  width:w,
+			  height:this.setting.height
+			});
+	    //设置幻灯片第一帧的位置
+		this.posterFirseItem.css({
+		   
+		});
+	   },
+	   // 用来获取人工配置参数
+	   getSetting:function(){
+	      var setting=this.poster.attr("data-setting");
+		  //判断人工配置属性是否存在,返回对象(将配置属性返回出来)
+		  if(setting && setting!=null){
+		     return $.parseJSON(setting); 
+		  }else{
+		     return {};
+		  }
+	   }
 
    };
    //初始化方法页面所以旋转木马的集合(传递集合类)
